@@ -227,6 +227,7 @@ OPENAI_MODEL=gpt-5-nano
 
 3. **設置環境變數**
    - `OPENAI_API_KEY`: 你的 OpenAI API 金鑰
+   - `OPENAI_MODEL`: OpenAI GPT模型
    - `NODE_ENV`: production
 
 4. **自動部署**

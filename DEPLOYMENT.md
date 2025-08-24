@@ -50,6 +50,7 @@ git push -u origin main
 
 3. **環境變數**
    - 添加 `OPENAI_API_KEY`
+   - 添加 `OPENAI_MODEL`
    - 添加 `NODE_ENV=production`
 
 ## 部署後檢查

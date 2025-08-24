@@ -127,29 +127,70 @@ OPENAI_MODEL=gpt-5-nano
 ```json
 {
   "image": "base64_encoded_image",
-  "prompt": "分析提示文字"
+  "prompt": "分析提示文字（可選）"
 }
 ```
 
-**回應:**
+**回應格式:**
 ```json
 {
-  "foodName": "食物名稱",
-  "description": "食物描述",
-  "nutrition": {
-    "calories": "熱量",
-    "protein": "蛋白質",
-    "carbs": "碳水化合物",
-    "fat": "脂肪",
-    "fiber": "纖維",
-    "sodium": "鈉"
+  "guard": {
+    "is_food": true,
+    "issues": [],
+    "user_message": ""
   },
-  "healthTips": ["健康建議1", "健康建議2"]
+  "summary": "以繁體中文撰寫的營養師專業分析摘要",
+  "nutrition": {
+    "calories_kcal": 650,
+    "macros": {
+      "carb_g": 65,
+      "protein_g": 35,
+      "fat_g": 25
+    },
+    "macro_split_pct": {
+      "carb": "40%",
+      "protein": "22%",
+      "fat": "35%"
+    },
+    "micros": [
+      {
+        "name": "Sodium",
+        "amount_mg": 1200
+      },
+      {
+        "name": "Vitamin A",
+        "amount_iu": 500
+      }
+    ]
+  },
+  "ingredients": ["白米飯", "烤雞腿", "青菜"],
+  "portion_assumptions": ["白飯約250g", "烤雞腿約150g"],
+  "uncertainties": ["拍攝角度造成份量判讀偏差"],
+  "confidence": 0.85,
+  "disclaimer": "此為影像估算，僅供參考，非醫療建議。"
+}
+```
+
+**錯誤回應（非食物影像）:**
+```json
+{
+  "guard": {
+    "is_food": false,
+    "issues": ["非食物影像"],
+    "user_message": "這張照片不是食物，請改上傳餐點照片。"
+  },
+  "summary": "",
+  "nutrition": null,
+  "ingredients": [],
+  "portion_assumptions": [],
+  "uncertainties": [],
+  "confidence": 0,
+  "disclaimer": "此為影像估算，僅供參考，非醫療建議。"
 }
 ```
 
 ### GET `/api/health`
-健康檢查端點
+健康檢查端點，返回服務狀態
 
 ## 🎯 使用方法
 

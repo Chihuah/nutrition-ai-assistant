@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臨床營養師 AI 助手 - 專業營養分析</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👩‍⚕️ 臨床營養師 AI 助手</h1>
+            <p>專業營養分析 • 個人化飲食建議 • 健康管理指導</p>
+        </header>
+        
+        <div class="chat-container">
+            <div class="messages" id="messages">
+                <div class="message bot-message">
+                    <div class="avatar">👩‍⚕️</div>
+                    <div class="content">
+                        <p>您好！我是您的AI營養師。</p>
+                        <p>請上傳食物照片，我會運用專業的營養學知識為您提供詳細的營養分析、健康評估和個人化的飲食建議。</p>
+                        <p>讓我們一起為您的健康把關！ 🍎</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <div class="upload-section">
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <button id="uploadBtn" class="upload-btn">
+                        📷 上傳食物照片
+                    </button>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+                
+                <div class="send-section">
+                    <button id="analyzeBtn" class="analyze-btn" disabled>
+                        🔍 分析營養成分
+                    </button>
+                    <button id="resetBtn" class="reset-btn" style="display: none;">
+                        🔄 重新上傳
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 滾動提示 -->
+    <div id="scrollHint" class="scroll-hint">
+        ↓ 向下滾動查看更多對話 ↓
+    </div>
+    
+    <!-- 回到頂部按鈕 -->
+    <button id="scrollToTop" class="scroll-to-top" style="display: none;">
+        ⬆️ 回到頂部
+    </button>
+    
+    <script src="script.js"></script>
+</body>
+</html>

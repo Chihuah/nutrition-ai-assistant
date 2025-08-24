@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試頁面 - 食物營養分析助手</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🧪 食物營養分析助手 - 測試頁面</h1>
+    
+    <div class="test-section">
+        <h2>1. 服務器連接測試</h2>
+        <button class="test-button" onclick="testServerConnection()">測試服務器連接</button>
+        <div id="server-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. API 健康檢查</h2>
+        <button class="test-button" onclick="testHealthCheck()">健康檢查</button>
+        <div id="health-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 模擬圖片分析測試</h2>
+        <button class="test-button" onclick="testImageAnalysis()">測試圖片分析</button>
+        <div id="analysis-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. 前端功能測試</h2>
+        <button class="test-button" onclick="testFrontendFeatures()">測試前端功能</button>
+        <div id="frontend-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. 返回主應用</h2>
+        <a href="index.html" class="test-button" style="text-decoration: none; display: inline-block;">返回主應用</a>
+    </div>
+
+    <script>
+        async function testServerConnection() {
+            const result = document.getElementById('server-result');
+            result.innerHTML = '測試中...';
+            
+            try {
+                const response = await fetch('/');
+                if (response.ok) {
+                    result.innerHTML = '<span class="success">✅ 服務器連接正常</span>';
+                } else {
+                    result.innerHTML = '<span class="error">❌ 服務器回應異常</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ 無法連接到服務器\n錯誤: ' + error.message + '</span>';
+            }
+        }
+        
+        async function testHealthCheck() {
+            const result = document.getElementById('health-result');
+            result.innerHTML = '檢查中...';
+            
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = '<span class="success">✅ API 健康檢查通過</span>\n' + 
+                                     JSON.stringify(data, null, 2);
+                } else {
+                    result.innerHTML = '<span class="error">❌ API 健康檢查失敗</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ 健康檢查失敗\n錯誤: ' + error.message + '</span>';
+            }
+        }
+        
+        async function testImageAnalysis() {
+            const result = document.getElementById('analysis-result');
+            result.innerHTML = '分析中...';
+            
+            try {
+                // 使用一個小的測試圖片 (1x1 像素的透明 PNG)
+                const testImageBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+                
+                const response = await fetch('/api/analyze-food', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: testImageBase64,
+                        prompt: '這是一個測試圖片，請返回測試結果。'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = '<span class="success">✅ 圖片分析 API 正常</span>\n' + 
+                                     JSON.stringify(data, null, 2);
+                } else {
+                    result.innerHTML = '<span class="error">❌ 圖片分析失敗</span>\n' + 
+                                     JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ 圖片分析測試失敗\n錯誤: ' + error.message + '</span>';
+            }
+        }
+        
+        function testFrontendFeatures() {
+            const result = document.getElementById('frontend-result');
+            let tests = [];
+            
+            // 測試 DOM 元素
+            tests.push('DOM 測試:');
+            tests.push(document.getElementById('messages') ? '✅ 消息容器存在' : '❌ 消息容器不存在');
+            tests.push(document.getElementById('imageInput') ? '✅ 圖片輸入存在' : '❌ 圖片輸入不存在');
+            tests.push(document.getElementById('uploadBtn') ? '✅ 上傳按鈕存在' : '❌ 上傳按鈕不存在');
+            tests.push(document.getElementById('analyzeBtn') ? '✅ 分析按鈕存在' : '❌ 分析按鈕不存在');
+            
+            // 測試 JavaScript 功能
+            tests.push('\nJavaScript 測試:');
+            tests.push(typeof FileReader !== 'undefined' ? '✅ FileReader API 支持' : '❌ FileReader API 不支持');
+            tests.push(typeof fetch !== 'undefined' ? '✅ Fetch API 支持' : '❌ Fetch API 不支持');
+            tests.push(typeof FormData !== 'undefined' ? '✅ FormData API 支持' : '❌ FormData API 不支持');
+            
+            result.innerHTML = tests.join('\n');
+        }
+    </script>
+</body>
+</html>
